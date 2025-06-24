@@ -4,42 +4,72 @@ GO
 
 ----------------------------------------------------------------------
 -- 1. DADOS DE LOCALIZAÇÃO
+-- Quantidades baseadas no arquivo de exemplo.
 ----------------------------------------------------------------------
 
--- Unidade_Federativa (5 ocorrências)
+-- Unidade_Federativa (5 ocorrências, incluindo RJ, SP, MG)
 INSERT INTO dbo.Unidade_Federativa (Cd_UF, Nm_UF) VALUES
+('RJ', 'Rio de Janeiro'),
+('SP', 'São Paulo'),
+('MG', 'Minas Gerais'),
 ('SC', 'Santa Catarina'),
-('PR', 'Paraná'),
-('PE', 'Pernambuco'),
-('AM', 'Amazonas'),
-('GO', 'Goiás');
+('BA', 'Bahia');
 
--- Municipio (Pelo menos 1 por UF)
+-- Municipio (5 ocorrências)
 INSERT INTO dbo.Municipio (Cd_Municipio, Nm_Municipio, Cd_UF) VALUES
+('MUN-RIO', 'Rio de Janeiro', 'RJ'),
+('MUN-SPO', 'São Paulo', 'SP'),
+('MUN-BH', 'Belo Horizonte', 'MG'),
 ('MUN-FLN', 'Florianópolis', 'SC'),
-('MUN-CWB', 'Curitiba', 'PR'),
-('MUN-REC', 'Recife', 'PE'),
-('MUN-MAO', 'Manaus', 'AM'),
-('MUN-GYN', 'Goiânia', 'GO'),
-('MUN-JOI', 'Joinville', 'SC');
+('MUN-SSA', 'Salvador', 'BA');
 
--- Bairro (Pelo menos 5 ocorrências)
+-- Bairro (5 ocorrências)
 INSERT INTO dbo.Bairro (Cd_Bairro, Nm_Bairro, Cd_Municipio) VALUES
-('BA-TRND', 'Trindade', 'MUN-FLN'),
-('BA-AGVD', 'Água Verde', 'MUN-CWB'),
-('BA-BVG', 'Boa Viagem', 'MUN-REC'),
-('BA-PNTN', 'Ponta Negra', 'MUN-MAO'),
-('BA-STBU', 'Setor Bueno', 'MUN-GYN'),
-('BA-AMRC', 'América', 'MUN-JOI');
+('BA-CPA', 'Copacabana', 'MUN-RIO'),
+('BA-ITM', 'Itaim Bibi', 'MUN-SPO'),
+('BA-SVS', 'Savassi', 'MUN-BH'),
+('BA-CNT', 'Centro', 'MUN-FLN'),
+('BA-BAR', 'Barra', 'MUN-SSA');
 
--- Endereco (Pelo menos 5 ocorrências)
+-- Endereco (32 ocorrências)
+-- Gerando um volume maior de endereços para dar suporte às outras tabelas.
 INSERT INTO dbo.Endereco (Cd_Endereco, Cd_CEP, Nm_Logradouro, Nu_Logradouro, Ds_Complemento, Cd_Bairro) VALUES
-('END-001', '88036-000', 'Rua Lauro Linhares', 1200, 'Bloco A', 'BA-TRND'),
-('END-002', '80620-010', 'Avenida República Argentina', 2500, 'Apto 101', 'BA-AGVD'),
-('END-003', '51020-000', 'Avenida Boa Viagem', 550, 'Hotel', 'BA-BVG'),
-('END-004', '69037-000', 'Avenida Coronel Teixeira', 1320, NULL, 'BA-PNTN'),
-('END-005', '74230-030', 'Avenida T-10', 400, 'Sala 50', 'BA-STBU'),
-('END-006', '89204-251', 'Rua Max Colin', 1105, NULL, 'BA-AMRC');
+-- Endereços no Rio de Janeiro
+('END-001', '22050-002', 'Avenida Atlântica', 1702, 'Apto 501', 'BA-CPA'),
+('END-002', '22071-000', 'Rua Barata Ribeiro', 500, NULL, 'BA-CPA'),
+('END-003', '22020-001', 'Rua Gustavo Sampaio', 80, 'Posto de Saúde', 'BA-CPA'),
+('END-004', '22041-011', 'Rua Figueiredo de Magalhães', 219, 'Clínica', 'BA-CPA'),
+('END-005', '22080-002', 'Rua Francisco Otaviano', 90, NULL, 'BA-CPA'),
+-- Endereços em São Paulo
+('END-006', '04538-132', 'Avenida Brigadeiro Faria Lima', 3477, 'Andar 10', 'BA-ITM'),
+('END-007', '04543-011', 'Avenida Presidente Juscelino Kubitschek', 2041, 'Torre D', 'BA-ITM'),
+('END-008', '04532-060', 'Rua Prof. Atílio Innocenti', 165, 'UBS', 'BA-ITM'),
+('END-009', '01449-001', 'Rua Oscar Freire', 700, NULL, 'BA-ITM'),
+('END-010', '04547-005', 'Rua Gomes de Carvalho', 1500, 'Apto 202', 'BA-ITM'),
+-- Endereços em Belo Horizonte
+('END-011', '30112-021', 'Avenida do Contorno', 6000, 'Hospital', 'BA-SVS'),
+('END-012', '30130-174', 'Rua da Bahia', 2000, NULL, 'BA-SVS'),
+('END-013', '30140-071', 'Rua Pernambuco', 880, 'Apto 303', 'BA-SVS'),
+('END-014', '30140-120', 'Rua Inconfidentes', 911, 'Centro Clínico', 'BA-SVS'),
+('END-015', '30130-141', 'Rua Alagoas', 550, NULL, 'BA-SVS'),
+-- Endereços extras para completar os 32
+('END-016', '88015-200', 'Avenida Hercílio Luz', 300, NULL, 'BA-CNT'),
+('END-017', '88020-300', 'Rua Esteves Júnior', 150, 'Apto 110', 'BA-CNT'),
+('END-018', '40140-090', 'Avenida Sete de Setembro', 3800, 'Apto 101', 'BA-BAR'),
+('END-019', '40130-000', 'Avenida Oceânica', 2400, NULL, 'BA-BAR'),
+('END-020', '22071-100', 'Rua Siqueira Campos', 43, 'Loja 10', 'BA-CPA'),
+('END-021', '04545-000', 'Rua das Fiandeiras', 250, NULL, 'BA-ITM'),
+('END-022', '30140-061', 'Rua Tomé de Souza', 830, 'Apto 801', 'BA-SVS'),
+('END-023', '88010-001', 'Rua Felipe Schmidt', 10, 'Apto 502', 'BA-CNT'),
+('END-024', '40140-130', 'Rua Marquês de Caravelas', 220, NULL, 'BA-BAR'),
+('END-025', '22011-001', 'Avenida Nossa Senhora de Copacabana', 100, 'Apto 909', 'BA-CPA'),
+('END-026', '04533-010', 'Rua Tabapuã', 81, NULL, 'BA-ITM'),
+('END-027', '30140-081', 'Rua Santa Rita Durão', 1000, NULL, 'BA-SVS'),
+('END-028', '88015-420', 'Rua Vidal Ramos', 50, NULL, 'BA-CNT'),
+('END-029', '40140-000', 'Avenida Princesa Isabel', 10, NULL, 'BA-BAR'),
+('END-030', '22070-011', 'Rua Tonelero', 180, NULL, 'BA-CPA'),
+('END-031', '04530-001', 'Rua Doutor Renato Paes de Barros', 955, NULL, 'BA-ITM'),
+('END-032', '30140-005', 'Praça da Savassi', 20, NULL, 'BA-SVS');
 
 ----------------------------------------------------------------------
 -- 2. DADOS DE VACINAS, FABRICANTES E LOTES
@@ -47,75 +77,100 @@ INSERT INTO dbo.Endereco (Cd_Endereco, Cd_CEP, Nm_Logradouro, Nu_Logradouro, Ds_
 
 -- Fabricante (5 ocorrências)
 INSERT INTO dbo.Fabricante (Cd_Fabricante, Nm_Fabricante, CNPJ_Fabricante) VALUES
-('FAB-GSK', 'GSK', '33247743000104'),
-('FAB-SNF', 'Sanofi', '02956406000198'),
-('FAB-MRK', 'Merck', '33069212000147'),
-('FAB-BHR', 'Bayer', '18459628000115'),
-('FAB-CRZ', 'Bio-Manguinhos/Fiocruz', '33781055000135');
+('FAB-FIO', 'Fiocruz', '33781055000135'),
+('FAB-BTN', 'Butantan', '61610534000183'),
+('FAB-PFZ', 'Pfizer', '46989728000160'),
+('FAB-JNS', 'Janssen', '51780468000187'),
+('FAB-AZN', 'AstraZeneca', '00923151000114');
 
 -- Doenca (5 ocorrências)
 INSERT INTO dbo.Doenca (Cd_Doenca, Nm_Doenca) VALUES
-('DOE-HPV', 'Papilomavírus Humano'),
-('DOE-DNG', 'Dengue'),
-('DOE-GRIP', 'Gripe (Influenza)'),
-('DOE-SRMP', 'Sarampo'),
-('DOE-MNGB', 'Meningite B');
+('DOE-COV', 'COVID-19'),
+('DOE-INFLU', 'Influenza'),
+('DOE-FAMB', 'Febre Amarela'),
+('DOE-HPVC', 'HPV'),
+('DOE-DENG', 'Dengue');
 
--- Vacina (Pelo menos 1 por doença)
+-- Vacina (5 ocorrências)
 INSERT INTO dbo.Vacina (Cd_Vacina, Nm_Vacina, Cd_Doenca) VALUES
-('VAC-HPV4', 'HPV Quadrivalente', 'DOE-HPV'),
-('VAC-DENG', 'Qdenga', 'DOE-DNG'),
-('VAC-GRIP4', 'Gripe Tetravalente', 'DOE-GRIP'),
-('VAC-TRIP', 'Tríplice Viral (Sarampo)', 'DOE-SRMP'),
-('VAC-MENB', 'Bexsero', 'DOE-MNGB');
+('VAC-CVFIO', 'COVID-19 Fiocruz', 'DOE-COV'),
+('VAC-CVBTN', 'CoronaVac', 'DOE-COV'),
+('VAC-CVJNS', 'COVID-19 Janssen', 'DOE-COV'),
+('VAC-GRIPE', 'Influenza Trivalente', 'DOE-INFLU'),
+('VAC-FEBRE', 'Febre Amarela', 'DOE-FAMB');
 
--- Lote (Pelo menos 5 ocorrências)
+-- Lote (7 ocorrências)
 INSERT INTO dbo.Lote (Cd_Lote, Cd_Vacina, Cd_Fabricante, Dt_Validade, Dt_Fabricacao, Qt_Doses) VALUES
-('LOT-A01B', 'VAC-HPV4', 'FAB-MRK', '2026-10-31', '2024-11-01', 100),
-('LOT-C02D', 'VAC-DENG', 'FAB-GSK', '2027-05-20', '2025-05-21', 80),
-('LOT-E03F', 'VAC-GRIP4', 'FAB-SNF', '2025-12-15', '2024-06-15', 120),
-('LOT-G04H', 'VAC-TRIP', 'FAB-CRZ', '2028-01-01', '2026-01-01', 200),
-('LOT-I05J', 'VAC-MENB', 'FAB-GSK', '2026-08-30', '2025-02-28', 50),
-('LOT-K06L', 'VAC-GRIP4', 'FAB-SNF', '2026-02-01', '2024-08-01', 150);
+('LOT-CVF01', 'VAC-CVFIO', 'FAB-FIO', '2026-12-31', '2025-01-10', 50),
+('LOT-CVB01', 'VAC-CVBTN', 'FAB-BTN', '2026-10-20', '2025-04-15', 25),
+('LOT-CVJ01', 'VAC-CVJNS', 'FAB-JNS', '2026-11-01', '2025-11-01', 40),
+('LOT-PZ001', 'VAC-CVFIO', 'FAB-PFZ', '2026-12-01', '2025-12-01', 30),
+('LOT-AZN01', 'VAC-CVFIO', 'FAB-AZN', '2027-02-28', '2025-11-01', 60),
+('LOT-GRP01', 'VAC-GRIPE', 'FAB-BTN', '2026-05-01', '2025-03-10', 50),
+('LOT-FAMB1', 'VAC-FEBRE', 'FAB-FIO', '2028-01-01', '2026-06-01', 80);
+
 
 ----------------------------------------------------------------------
--- 3. DADOS DE PESSOAS E UNIDADES
+-- 3. DADOS DE UNIDADES, PACIENTES E VACINADORES
 ----------------------------------------------------------------------
 
 -- Unidade (5 ocorrências)
 INSERT INTO dbo.Unidade (Cd_Unidade, Nm_Unidade, Cd_Endereco) VALUES
-('UNID-TRND', 'Posto de Saúde Trindade', 'END-001'),
-('UNID-AGVD', 'Clínica de Vacinação Água Verde', 'END-002'),
-('UNID-BVG', 'Hospital Boa Viagem', 'END-003'),
-('UNID-PNTN', 'UBS Ponta Negra', 'END-004'),
-('UNID-STBU', 'Centro de Saúde Bueno', 'END-005');
+('UNID-CPA', 'Posto de Saúde Copacabana', 'END-003'),
+('UNID-ITM', 'UBS Itaim Bibi', 'END-008'),
+('UNID-SVS', 'Hospital da Savassi', 'END-011'),
+('UNID-CNT', 'Clínica Centro', 'END-016'),
+('UNID-BAR', 'UBS Barra', 'END-019');
 
 -- Paciente (5 ocorrências)
 INSERT INTO dbo.Paciente (Cd_Paciente, Nm_Paciente, Cd_CPF_Paciente, Dt_Nascimento, Cd_Sexo) VALUES
-('PAC-001', 'Ana Clara Rezende', '11122233344', '1995-03-12', 'F'),
-('PAC-002', 'Bruno Carvalho Dias', '22233344455', '1988-07-25', 'M'),
-('PAC-003', 'Camila Ferreira Alves', '33344455566', '2001-11-02', 'F'),
-('PAC-004', 'Diego Martins Santos', '44455566677', '1974-01-30', 'M'),
-('PAC-005', 'Eduarda Lima Guedes', '55566677788', '2010-09-15', 'F');
+('PAC-001', 'Maria Silva', '11122233344', '1980-05-15', 'F'),
+('PAC-002', 'João Souza', '55566677788', '1990-10-20', 'M'),
+('PAC-003', 'Carlos Andrade', '22233344455', '1995-02-25', 'M'),
+('PAC-004', 'Ana Beatriz Costa', '88899900011', '2018-08-10', 'F'),
+('PAC-005', 'Helena Costa', '12312312312', '1985-11-30', 'F');
 
--- Vacinador (5 ocorrências)
+-- Vacinador (21 ocorrências)
 INSERT INTO dbo.Vacinador (Cd_Vacinador, Nm_Vacinador, Cd_CPF_Vacinador, Cd_Unidade_Trabalho) VALUES
-('VACD-001', 'Fernanda Oliveira', '66677788899', 'UNID-TRND'),
-('VACD-002', 'Gustavo Pereira', '77788899900', 'UNID-AGVD'),
-('VACD-003', 'Heloísa Costa', '88899900011', 'UNID-BVG'),
-('VACD-004', 'Igor Azevedo', '99900011122', 'UNID-PNTN'),
-('VACD-005', 'Juliana Barbosa', '00011122233', 'UNID-STBU');
+('VACD-001','Fernanda Lima','44455566677','UNID-ITM'),
+('VACD-002','Ricardo Souza','77788899900','UNID-SVS'),
+('VACD-003','Bruno Alves','10120230344','UNID-CPA'),
+('VACD-004','Carolina Lima','20230340455','UNID-ITM'),
+('VACD-005','Diego Nogueira','30340450566','UNID-CPA'),
+('VACD-006','Elisa Pinto','40450560677','UNID-BAR'),
+('VACD-007','Fabiana Rocha','50560670788','UNID-CPA'),
+('VACD-008','Gustavo Ribeiro','60670780899','UNID-ITM'),
+('VACD-009','Helena Santoro','70780890911','UNID-SVS'),
+('VACD-010','Igor Martins','80890910922','UNID-BAR'),
+('VACD-011','Juliana Teixeira','90910920933','UNID-CPA'),
+('VACD-012','Kléber Viana','01234567890','UNID-ITM'),
+('VACD-013','Lúcia Azevedo','12345678900','UNID-SVS'),
+('VACD-014','Mário Brandão','23456789011','UNID-BAR'),
+('VACD-015','Natália Crespo','34567890122','UNID-CPA'),
+('VACD-016','Otávio Campos','55565675788','UNID-ITM'),
+('VACD-017','Patrícia Farias','66676786899','UNID-SVS'),
+('VACD-018','Rafael Junqueira','77787897911','UNID-CNT'),
+('VACD-019','Sofia Siqueira','88898918922','UNID-CNT'),
+('VACD-020','Carla Mendes','20000000005','UNID-CPA'),
+('VACD-021','Vanessa Gomes','99988877766','UNID-BAR');
+
 
 ----------------------------------------------------------------------
--- 4. DADOS DE REGISTRO DA VACINAÇÃO
+-- 4. DADOS DE REGISTRO DA VACINAÇÃO (13 ocorrências)
 ----------------------------------------------------------------------
 INSERT INTO dbo.Vacinacao_Registro (Cd_Vacinacao, Dt_Vacinacao, Nu_Dose, Cd_Paciente, Cd_Vacinador, Cd_Unidade, Cd_Lote) VALUES
-('REG-00001', '2025-06-10 10:30:00', 1, 'PAC-001', 'VACD-001', 'UNID-TRND', 'LOT-A01B'),
-('REG-00002', '2025-06-15 11:00:00', 1, 'PAC-002', 'VACD-002', 'UNID-AGVD', 'LOT-E03F'),
-('REG-00003', '2025-06-20 14:00:00', 1, 'PAC-003', 'VACD-003', 'UNID-BVG', 'LOT-C02D'),
-('REG-00004', '2025-06-25 09:15:00', 1, 'PAC-005', 'VACD-001', 'UNID-TRND', 'LOT-I05J'),
-('REG-00005', '2025-07-01 16:00:00', 2, 'PAC-001', 'VACD-001', 'UNID-TRND', 'LOT-A01B'),
-('REG-00006', '2025-07-10 08:45:00', 1, 'PAC-004', 'VACD-005', 'UNID-STBU', 'LOT-G04H'),
-('REG-00007', '2025-07-15 13:20:00', 2, 'PAC-002', 'VACD-002', 'UNID-AGVD', 'LOT-K06L');
+('REG-00001', '2025-06-07 10:00:00', 1, 'PAC-001', 'VACD-003', 'UNID-CPA', 'LOT-CVF01'),
+('REG-00002', '2025-07-20 11:00:00', 2, 'PAC-001', 'VACD-003', 'UNID-CPA', 'LOT-CVF01'),
+('REG-00003', '2025-08-01 14:30:00', 1, 'PAC-002', 'VACD-004', 'UNID-ITM', 'LOT-CVB01'),
+('REG-00004', '2025-08-05 09:15:00', 1, 'PAC-003', 'VACD-002', 'UNID-SVS', 'LOT-GRP01'),
+('REG-00005', '2025-09-10 15:00:00', 2, 'PAC-002', 'VACD-004', 'UNID-ITM', 'LOT-CVB01'),
+('REG-00006', '2025-06-06 16:00:00', 1, 'PAC-004', 'VACD-010', 'UNID-BAR', 'LOT-GRP01'),
+('REG-00007', '2025-06-07 10:00:00', 1, 'PAC-005', 'VACD-003', 'UNID-CPA', 'LOT-CVF01'),
+('REG-00008', '2025-10-10 10:30:00', 2, 'PAC-005', 'VACD-016', 'UNID-ITM', 'LOT-CVB01'),
+('REG-00009', '2025-11-15 11:00:00', 3, 'PAC-005', 'VACD-002', 'UNID-SVS', 'LOT-PZ001'),
+('REG-00010', '2025-12-20 09:45:00', 4, 'PAC-005', 'VACD-018', 'UNID-CNT', 'LOT-CVJ01'),
+('REG-00011', '2026-01-25 14:00:00', 5, 'PAC-005', 'VACD-010', 'UNID-BAR', 'LOT-AZN01'),
+('REG-00012', '2026-02-10 08:30:00', 1, 'PAC-002', 'VACD-009', 'UNID-SVS', 'LOT-FAMB1'),
+('REG-00013', '2026-02-12 10:00:00', 2, 'PAC-004', 'VACD-009', 'UNID-SVS', 'LOT-FAMB1');
 
 GO
