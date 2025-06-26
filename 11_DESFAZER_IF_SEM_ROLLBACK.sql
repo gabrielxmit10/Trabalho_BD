@@ -1,4 +1,4 @@
--- SCRIPT DE LIMPEZA PARA A QUEST�O 11
+-- LIMPEZA pra QUESTÃO 11 (caso faça sem ROLLBACK)
 USE VacinacaoDB;
 GO
 
