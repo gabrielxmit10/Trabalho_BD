@@ -1,28 +1,26 @@
 USE VacinacaoDB;
 GO
 
--- Criando a Tabela Tempor·ria Global ##FabricantesTemp com dbo.Fabricante
+-- Criando Tabela Tempor√°ria Global
 SELECT *
 INTO ##FabricantesTemp
 FROM dbo.Fabricante;
 GO
 
--- Conte˙do inicial da Tabela Tempor·ria Global:
+-- Tabela Tempor√°ria Global Inicial /
 SELECT * FROM ##FabricantesTemp;
 GO
 
-
+-- Insert S√ì na Tabela Tempor√°ria
 INSERT INTO ##FabricantesTemp (Cd_Fabricante, Nm_Fabricante, CNPJ_Fabricante)
 VALUES ('FAB-TEMP', 'Fabricante de Teste', '88888888000188');
 
--- Conte˙do da tabela tempor·ria AP”S A INSER«√O:
+-- Conte√∫do da Tabela Tempor√°ria AP√ìS A INSER√á√ÉO: //
 SELECT * FROM ##FabricantesTemp;
 
--- Conte˙do da tabela ORIGINAL dbo.Fabricante (permanece inalterada):
+-- Conte√∫do da tabela ORIGINAL (N√ÉO TEM FAB-TEMP porque t√° na Tempor√°ria): ///
 SELECT * FROM dbo.Fabricante;
 GO
 
 DROP TABLE IF EXISTS ##FabricantesTemp;
 GO
-
--- DemonstraÁ„o concluÌda.
