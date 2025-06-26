@@ -1,35 +1,26 @@
--- Usar o banco de dados correto
 USE VacinacaoDB;
 GO
 
--- Passo 1: Preparar os dados de teste.
-PRINT '--- Inserindo dados de teste para o FULL JOIN... ---';
-
--- Inserindo um Fabricante que não tem lotes/vacinas.
+-- 1. Inserindo Fabricante sem Vacina (sem Lote nenhum)
 IF NOT EXISTS (SELECT 1 FROM dbo.Fabricante WHERE Cd_Fabricante = 'FAB-GHOST')
 BEGIN
     INSERT INTO dbo.Fabricante (Cd_Fabricante, Nm_Fabricante, CNPJ_Fabricante) 
     VALUES ('FAB-GHOST', 'Fabricante Fantasma', '99999999000199');
 END;
 
--- Inserindo uma Vacina que não está em nenhum lote.
--- Primeiro, garantimos a doença "mãe".
+-- 1.1. Inserindo Vacina sem Fabricante
 IF NOT EXISTS (SELECT 1 FROM dbo.Doenca WHERE Cd_Doenca = 'DOE-ORFA')
 BEGIN
-    INSERT INTO dbo.Doenca (Cd_Doenca, Nm_Doenca) VALUES ('DOE-ORFA', 'Doença Órfã');
+    INSERT INTO dbo.Doenca (Cd_Doenca, Nm_Doenca) VALUES ('DOE-ORFA', 'DoenÃ§a Ã“rfÃ£');
 END;
 IF NOT EXISTS (SELECT 1 FROM dbo.Vacina WHERE Cd_Vacina = 'VAC-ORFA')
 BEGIN
     INSERT INTO dbo.Vacina (Cd_Vacina, Nm_Vacina, Cd_Doenca) 
-    VALUES ('VAC-ORFA', 'Vacina Órfã', 'DOE-ORFA');
+    VALUES ('VAC-ORFA', 'Vacina Ã“rfÃ£', 'DOE-ORFA');
 END;
 GO
 
--- Passo 2: Executar a consulta com FULL JOIN.
-PRINT '--- Executando a consulta FULL JOIN... ---';
-
--- Usamos uma CTE (Common Table Expression) para criar uma tabela virtual
--- que representa as ligações existentes entre fabricantes e vacinas através dos lotes.
+-- 2. Usando FULL JOIN pra ver os Fabricantes e Vacinas Juntos
 WITH FabricanteVacinaLink AS (
     SELECT DISTINCT l.Cd_Fabricante, l.Cd_Vacina
     FROM dbo.Lote AS l
@@ -48,9 +39,7 @@ ORDER BY
 GO
 
 
--- Passo 3: Limpeza dos dados de teste.
-PRINT '--- Removendo os dados de teste... ---';
--- A ordem da remoção é importante para respeitar as chaves estrangeiras.
+-- 3. Tirando os Dados da QuestÃ£o
 DELETE FROM dbo.Vacina WHERE Cd_Vacina = 'VAC-ORFA';
 DELETE FROM dbo.Doenca WHERE Cd_Doenca = 'DOE-ORFA';
 DELETE FROM dbo.Fabricante WHERE Cd_Fabricante = 'FAB-GHOST';
