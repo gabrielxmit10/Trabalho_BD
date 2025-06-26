@@ -1,26 +1,36 @@
--- Usar o banco de dados correto
 USE VacinacaoDB;
 GO
 
--- 1. ANTES: Verificando o dado original
+-- 1. ANTES: Sexo Original (M)
 SELECT Nm_Paciente, Cd_Sexo FROM dbo.Paciente WHERE Cd_Paciente = 'PAC-002';
 GO
 
--- 2. DURANTE: Iniciando a transação e fazendo a atualização
 BEGIN TRANSACTION;
 
-    -- Atualiza o sexo do paciente
     UPDATE dbo.Paciente
     SET Cd_Sexo = 'O'
     WHERE Cd_Paciente = 'PAC-002';
 
-    -- Verificando o dado DENTRO da transação (ainda não é permanente)
+    -- 2. DURANTE COMMIT: Sexo novo nÃ£o confirmado ainda (O)
     SELECT Nm_Paciente, Cd_Sexo FROM dbo.Paciente WHERE Cd_Paciente = 'PAC-002';
 
--- 3. COMMIT: Tornando a alteração permanente
 COMMIT TRANSACTION;
 GO
 
--- 4. DEPOIS: Verificando se a alteração foi salva permanentemente
+-- 3. DEPOIS: Sexo novo jÃ¡ alterado (O)
 SELECT Nm_Paciente, Cd_Sexo FROM dbo.Paciente WHERE Cd_Paciente = 'PAC-002';
+GO
+
+
+-------------------------------------------------------
+
+
+-- Mudando de volta pra poder rodar de novo
+BEGIN TRANSACTION;
+
+    UPDATE dbo.Paciente
+    SET Cd_Sexo = 'M'
+    WHERE Cd_Paciente = 'PAC-002';
+
+COMMIT TRANSACTION;
 GO
