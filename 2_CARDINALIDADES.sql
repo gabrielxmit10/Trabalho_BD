@@ -1,8 +1,6 @@
--- Usar o banco de dados correto
 USE VacinacaoDB;
 GO
 
--- Query para listar as tabelas e suas cardinalidades usando UNION ALL
 SELECT 'Bairro' AS Tabela, COUNT(*) AS Cardinalidade FROM dbo.Bairro
 UNION ALL
 SELECT 'Doenca' AS Tabela, COUNT(*) AS Cardinalidade FROM dbo.Doenca
