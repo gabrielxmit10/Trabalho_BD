@@ -1,7 +1,7 @@
 USE VacinacaoDB;
 GO
 
--- 1. Inserir um lote de teste já vencido
+-- 1. Insert dum Lote jÃ¡ VENCIDO
 
 IF NOT EXISTS (SELECT 1 FROM dbo.Lote WHERE Cd_Lote = 'LOT-VENC')
 BEGIN
@@ -10,19 +10,17 @@ BEGIN
 END
 GO
 
--- Conferir o lote inserido
+-- Conferir Lote do Insert
 -- SELECT * FROM dbo.Lote WHERE Cd_Lote = 'LOT-VENC';
 -- GO
 
 
--- Passo 2: Criar a VIEW.
--- Apagamos a VIEW se ela já existir, em seu próprio lote.
+
 DROP VIEW IF EXISTS dbo.vLotesVencidos;
-GO -- <== GO ADICIONADO AQUI
+GO
 
-PRINT '--- Criando a VIEW dbo.vLotesVencidos... ---';
-GO -- <== GO ADICIONADO AQUI para isolar o CREATE VIEW
 
+-- 2. Criar  VIEW (dbo.vLotesVencidos)
 CREATE VIEW dbo.vLotesVencidos AS
 SELECT
     l.Cd_Lote,
@@ -37,11 +35,10 @@ JOIN
 JOIN 
     dbo.Fabricante AS f ON l.Cd_Fabricante = f.Cd_Fabricante
 WHERE
-    l.Dt_Validade < GETDATE();
+    l.Dt_Validade < GETDATE(); -- Validade Antes de AGORA
 GO
 
 
--- Passo 3: Consultar a VIEW.
-PRINT '--- Consultando os dados da VIEW para ver os lotes vencidos. ---';
+-- 3. Ver VIEW de Lotes Vencidos
 SELECT * FROM dbo.vLotesVencidos;
 GO
