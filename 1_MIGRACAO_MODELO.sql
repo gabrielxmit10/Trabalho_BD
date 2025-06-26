@@ -1,14 +1,10 @@
--- Cria um novo banco de dados chamado 'VacinacaoDB'.
 -- CREATE DATABASE VacinacaoDB;
 -- GO
 
--- Muda o contexto do script para o banco de dados recém-criado.
 USE VacinacaoDB;
 GO
 
--- Lote 1: Criação de todas as tabelas e seus índices.
 
--- Tabelas de Localização
 CREATE TABLE dbo.Unidade_Federativa (
     Cd_UF CHAR(2) PRIMARY KEY, -- Ex: 'RJ', 'SP'
     Nm_UF CHAR(50) NOT NULL
@@ -41,7 +37,6 @@ CREATE TABLE dbo.Endereco (
 );
 CREATE INDEX IDX_Endereco_Cd_Bairro ON dbo.Endereco(Cd_Bairro);
 
--- Tabela de Paciente (Independente)
 CREATE TABLE dbo.Paciente (
     Cd_Paciente CHAR(10) PRIMARY KEY, -- Ex: 'PAC-001'
     Nm_Paciente CHAR(150) NOT NULL,
@@ -50,7 +45,6 @@ CREATE TABLE dbo.Paciente (
     Cd_Sexo CHAR(1)
 );
 
--- Unidades de Saúde e Vacinadores (Independentes)
 CREATE TABLE dbo.Unidade (
     Cd_Unidade CHAR(10) PRIMARY KEY, -- Ex: 'UNID-01'
     Nm_Unidade CHAR(100) NOT NULL,
@@ -68,7 +62,6 @@ CREATE TABLE dbo.Vacinador (
 );
 CREATE INDEX IDX_Vacinador_Cd_Unidade_Trabalho ON dbo.Vacinador(Cd_Unidade_Trabalho);
 
--- Tabelas da Vacina
 CREATE TABLE dbo.Fabricante (
     Cd_Fabricante CHAR(10) PRIMARY KEY, -- Ex: 'FAB-01'
     Nm_Fabricante CHAR(100) NOT NULL,
@@ -101,7 +94,6 @@ CREATE TABLE dbo.Lote (
 CREATE INDEX IDX_Lote_Cd_Vacina ON dbo.Lote(Cd_Vacina);
 CREATE INDEX IDX_Lote_Cd_Fabricante ON dbo.Lote(Cd_Fabricante);
 
--- Tabela Fato: Registro da Vacinação
 CREATE TABLE dbo.Vacinacao_Registro (
     Cd_Vacinacao CHAR(10) PRIMARY KEY, -- Ex: 'REG-001'
     Dt_Vacinacao DATETIME NOT NULL,
@@ -120,4 +112,4 @@ CREATE INDEX IDX_Registro_Cd_Vacinador ON dbo.Vacinacao_Registro(Cd_Vacinador);
 CREATE INDEX IDX_Registro_Cd_Unidade ON dbo.Vacinacao_Registro(Cd_Unidade);
 CREATE INDEX IDX_Registro_Cd_Lote ON dbo.Vacinacao_Registro(Cd_Lote);
 
-GO -- Fim do lote de criação de tabelas.
+GO
