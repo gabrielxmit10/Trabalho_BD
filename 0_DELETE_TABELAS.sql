@@ -1,9 +1,6 @@
--- Usar o banco de dados correto
 USE VacinacaoDB;
 GO
 
--- Apagando as tabelas na ordem correta para respeitar as chaves estrangeiras.
--- Tabelas com mais dependências são apagadas primeiro.
 
 DROP TABLE IF EXISTS dbo.Vacinacao_Registro;
 DROP TABLE IF EXISTS dbo.Lote;
@@ -19,5 +16,3 @@ DROP TABLE IF EXISTS dbo.Municipio;
 DROP TABLE IF EXISTS dbo.Unidade_Federativa;
 
 GO
-
-PRINT 'Tabelas apagadas.';
